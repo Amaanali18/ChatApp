@@ -47,6 +47,7 @@ public class RoomController {
     // get messages of room
     @GetMapping("/{roomId}/messages")
     public ResponseEntity<List<Message>> getMessages(@PathVariable String roomId,
+        // pagination
         @RequestParam(value="page",defaultValue = "0",required = false) int page,
         @RequestParam(value="size",defaultValue = "15",required = false) int size
 
@@ -56,6 +57,7 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ArrayList<>());
         }
         List<Message> messages = room.getMessages();
+        // pagination logic
         int start = Math.max(0, messages.size()-(page+1)*size);
         int end = Math.min(start+size,messages.size());
         return ResponseEntity.ok(messages.subList(start, end));
