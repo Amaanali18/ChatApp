@@ -18,7 +18,10 @@ public class WebSocket implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket").withSockJS();
+        // websocket endpoint , every data transfer will flow from here
+        registry.addEndpoint("/chat")
+                .setAllowedOrigins("http://localhost:5173")
+                .withSockJS();
     }
 
 }
