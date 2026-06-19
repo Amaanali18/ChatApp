@@ -1,4 +1,4 @@
-import HomeFile from "./HomeFile/homeComp.jsx";
-import ChatFile from "./Chat/chatComp.jsx";
+import HomeComp from "./Home/homeComp.jsx";
+import ChatComp from "./Chat/chatComp.jsx";
 
-export {HomeFile,ChatFile}
+export {HomeComp,ChatComp}

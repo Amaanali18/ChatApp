@@ -1,23 +1,8 @@
 import {useRef, useState} from "react";
 
-const chatComp = () => {
+const ChatComp = () => {
     
-    const [messages, setMessages] = useState([
-        {
-            content: "Hi!",
-            sender: 'Amaan'
-        },
-        {
-            content: "Hello, World!",
-            sender: 'Ali'
-        },
-        {
-            content: "lorem ipsum dolor sit amet hvy jbvbkf bdivbkjbk kbdviubwkbi kbdvbrkbiurw kdbvbwkjbgrw hdbkvwr kvuiwrb",
-            sender: 'Amaan'
-        }
-
-    ])
-
+    const [messages, setMessages] = useState([])
     const [user, setUser] = useState('Amaan');
     const [roomid, setRoomid] = useState("")
     const [input, setInput] = useState("")
@@ -88,4 +73,4 @@ const chatComp = () => {
     )
 }
 
-export default chatComp;
+export default ChatComp;

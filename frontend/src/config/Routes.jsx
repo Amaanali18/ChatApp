@@ -1,11 +1,11 @@
 import {Routes,Route} from 'react-router-dom'
-import {HomeFile,ChatFile} from "../components/store.js";
+import {HomeComp,ChatComp} from "../components/store.js";
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<HomeFile/>}/>
-            <Route path="/chat" element={<ChatFile/>} />
+            <Route path="/" element={<HomeComp/>}/>
+            <Route path="/chat" element={<ChatComp/>}/>
         </Routes>
     )
 }
