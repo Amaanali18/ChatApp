@@ -1,11 +1,17 @@
 import {useState} from 'react';
 import toast from "react-hot-toast";
+import {createRoomApi, joinRoomApi} from "../../services/RoomService.js";
+import useChatContext from "../../context/ChatContext.jsx";
+import {useNavigate} from "react-router-dom";
+import {AxiosApi} from "../../config/AxiosHelper.js";
 
 const HomeComp = () => {
     const [detail, setDetail] = useState({
         roomId:"",
         userName:""
     })
+    const navigate = useNavigate();
+    const {roomId, setRoomId,currentUser, setCurrentUser,connected,setConnected}=useChatContext()
     function formSubmit(event) {
         setDetail({
             ...detail,
@@ -26,17 +32,40 @@ const HomeComp = () => {
         }
         return true;
     }
-    function createRoom(){
-
-        if(validateUserName()){
-            console.log(detail);
+    async function createRoom(){
+        if(validateUserName() && validateRoomId()){
+            try{
+                console.log("detail.roomId =", detail.roomId);
+                const response =  await createRoomApi(detail.roomId);
+                console.log(response);
+                toast.success("Room created!");
+                setRoomId(detail.roomId);
+                setCurrentUser(detail.userName);
+                setConnected(true);
+                navigate("/chat")
+            }catch(error){
+                error.status === 409 ?
+                toast.error("Duplicate Room -> Creation failed!") :
+                toast.error("Something went wrong!");
+            }
         }
 
     }
-    function joinChat(){
+    async function joinChat(){
 
         if(validateUserName() && validateRoomId()){
-            console.log(detail);
+            try{
+                const room = await joinRoomApi(detail.roomId);
+                setRoomId(room.roomId);
+                setCurrentUser(detail.userName);
+                setConnected(true);
+                navigate("/chat")
+                toast.success("Room joined!");
+
+            }catch(error){
+                toast.error('Something went wrong!');
+                console.log(error)
+            }
         }
 
     }
