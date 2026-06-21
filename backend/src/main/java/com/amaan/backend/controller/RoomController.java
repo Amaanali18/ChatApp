@@ -1,5 +1,6 @@
 package com.amaan.backend.controller;
 
+import com.amaan.backend.dtos.CreateRoomRequest;
 import com.amaan.backend.entities.Message;
 import com.amaan.backend.entities.Room;
 import com.amaan.backend.repository.RoomRepo;
@@ -21,17 +22,23 @@ public class RoomController {
 
     // create room
     @PostMapping("/create")
-    public ResponseEntity<?> createRoom(@RequestBody String data) {
+    public ResponseEntity<?> createRoom(
+            @RequestBody CreateRoomRequest request
+    ) {
 
-        if(roomRepo.findByRoomId(data) != null){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Room already exists");
+        String roomId = request.getRoomId();
+
+        if(roomRepo.findByRoomId(roomId) != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Room already exists");
         }
 
         Room room = new Room();
-        room.setRoomId(data);
-        roomRepo.save(room);
-        return ResponseEntity.status(HttpStatus.CREATED).body(room);
+        room.setRoomId(roomId);
 
+        roomRepo.save(room);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(room);
     }
 
     // get room

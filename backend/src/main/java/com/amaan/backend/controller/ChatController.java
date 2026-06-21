@@ -21,7 +21,7 @@ public class ChatController {
 
     // sent <-> receive messages
     @MessageMapping("/sendMessage/{roomId}") // connection when a msg is sent
-    @SendTo("/api/room/{roomId}") //subscribe to roomId for transfer of data
+    @SendTo("/topic/room/{roomId}") //subscribe to roomId for transfer of data
     public Message sendMessage(
             @DestinationVariable String roomId
             , @RequestBody MessageRequest msg
