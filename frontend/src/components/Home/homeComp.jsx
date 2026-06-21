@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import {createRoomApi, joinRoomApi} from "../../services/RoomService.js";
 import useChatContext from "../../context/ChatContext.jsx";
 import {useNavigate} from "react-router-dom";
-import {AxiosApi} from "../../config/AxiosHelper.js";
 
 const HomeComp = () => {
     const [detail, setDetail] = useState({
@@ -11,7 +10,7 @@ const HomeComp = () => {
         userName:""
     })
     const navigate = useNavigate();
-    const {roomId, setRoomId,currentUser, setCurrentUser,connected,setConnected}=useChatContext()
+    const {setRoomId, setCurrentUser,setConnected}=useChatContext()
     function formSubmit(event) {
         setDetail({
             ...detail,
