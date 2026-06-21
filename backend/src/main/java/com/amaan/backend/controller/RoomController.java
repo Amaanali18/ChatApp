@@ -10,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -32,9 +35,22 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body("Room already exists");
         }
+        if(roomRepo.count() >= 50){
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                    .body("Server capacity reached");
+        }
+        if(!roomId.matches("^[a-zA-Z0-9_-]{3,20}$")){
+            return ResponseEntity.badRequest()
+                    .body("Room ID must be 3-20 characters and contain only letters, numbers, _ or -");
+        }
 
         Room room = new Room();
         room.setRoomId(roomId);
+        room.setExpiryTime(
+                Date.from(
+                        Instant.now().plus(24, ChronoUnit.HOURS)
+                )
+        );
 
         roomRepo.save(room);
 

@@ -35,18 +35,16 @@ const HomeComp = () => {
     async function createRoom(){
         if(validateUserName() && validateRoomId()){
             try{
-                console.log("detail.roomId =", detail.roomId);
-                const response =  await createRoomApi(detail.roomId);
-                console.log(response);
+                await createRoomApi(detail.roomId);
                 toast.success("Room created!");
                 setRoomId(detail.roomId);
                 setCurrentUser(detail.userName);
                 setConnected(true);
                 navigate("/chat")
             }catch(error){
-                error.status === 409 ?
-                toast.error("Duplicate Room -> Creation failed!") :
-                toast.error("Something went wrong!");
+                if(error.response?.status === 409) toast.error("Duplicate Room -> Creation failed!")
+                else if(error.response?.status === 429) toast.error(error.response.data);
+                else toast.error("Something went wrong!");
             }
         }
 

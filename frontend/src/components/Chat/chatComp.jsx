@@ -5,6 +5,7 @@ import SockJS from 'sockjs-client'
 import {Stomp} from "@stomp/stompjs";
 import {baseurl} from "../../config/AxiosHelper.js";
 import {getMessages,timeAgo} from "../../services/RoomService.js";
+import toast from "react-hot-toast";
 
 const ChatComp = () => {
 
@@ -55,6 +56,9 @@ const ChatComp = () => {
     }, [roomId]);
     const sendMessage = async () => {
         if(stompClient && connected && input.trim()){
+            if(input.length > 500){
+                toast.error("Maximum 500 characters");
+            }
             const message = {
                 sender:currentUser,
                 message: input.trim(),
