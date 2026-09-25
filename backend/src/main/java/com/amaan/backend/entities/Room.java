@@ -24,4 +24,7 @@ public class Room {
     @Indexed(expireAfter = "0")
     private Date expiryTime;
 
+    public Room(String s) {
+        this.roomId=s;
+    }
 }
