@@ -5,7 +5,7 @@ import AppRoutes from "./config/Routes.jsx";
 import {BrowserRouter} from "react-router-dom";
 import {Toaster} from "react-hot-toast";
 import {ChatProvider} from "./context/ChatContext.jsx";
-
+// create router
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
         <Toaster position={'top-center'}/>
